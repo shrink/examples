@@ -1,0 +1,17 @@
+version: '3.4'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build
+    restart: unless-stopped
+    tty: true
+    working_dir: /srv
+    volumes:
+      - vendor:/srv/vendor
+      - ./composer.json:/srv/composer.json
+      - ./composer.lock:/srv/composer.lock
+      - .:/srv
+volumes:
+  vendor:

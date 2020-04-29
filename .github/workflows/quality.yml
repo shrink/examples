@@ -1,0 +1,23 @@
+name: Code Quality Check
+on: [pull_request]
+
+jobs:
+    insights:
+        runs-on: ubuntu-latest
+        name: PHP Insights checks
+        steps:
+            - uses: actions/checkout@v2
+            - uses: shivammathur/setup-php@v1
+              with:
+                  php-version: 7.4
+            - run: composer install --prefer-dist --no-progress --no-suggest
+            - run: composer insights -- --format=github-action
+    static:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: shivammathur/setup-php@v1
+              with:
+                  php-version: 7.4
+            - run: composer install --prefer-dist --no-progress --no-suggest
+            - run: composer static -- --output-format=github

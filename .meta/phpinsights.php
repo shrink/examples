@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use ObjectCalisthenics\Sniffs\NamingConventions\ElementNameMinimalLengthSniff;
 use PhpCsFixer\Fixer\Import\OrderedImportsFixer;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
 
@@ -10,6 +11,11 @@ return [
         OrderedImportsFixer::class => [
             'imports_order' => ['class', 'const', 'function'],
             'sort_algorithm' => 'alpha',
+        ],
+        ElementNameMinimalLengthSniff::class => [
+            'exclude' => [
+                'src/Examples/E.php',
+            ],
         ],
     ],
     'remove' => [

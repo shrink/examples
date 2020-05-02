@@ -65,4 +65,18 @@ final class CallableBuilderTest extends TestCase
 
         $this->assertEquals($expectedObject, $object);
     }
+
+    /**
+     * @test
+     */
+    public function BuildsExampleWithoutParameters(): void
+    {
+        $callableBuilder = new CallableBuilder(fn (): StdClass => (object) []);
+
+        $expectedObject = new StdClass();
+
+        $object = $callableBuilder->build();
+
+        $this->assertEquals($expectedObject, $object);
+    }
 }

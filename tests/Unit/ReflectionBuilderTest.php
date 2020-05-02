@@ -93,6 +93,20 @@ final class ReflectionBuilderTest extends TestCase
 
         $this->assertEquals($expectedPerson, $person);
     }
+
+    /**
+     * @test
+     */
+    public function BuildsObjectWithoutParameters(): void
+    {
+        $reflectionBuilder = new ReflectionBuilder(StdClass::class);
+
+        $expectedObject = new StdClass();
+
+        $object = $reflectionBuilder->build();
+
+        $this->assertEquals($expectedObject, $object);
+    }
 }
 
 final class Person

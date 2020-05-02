@@ -33,7 +33,7 @@ final class ReflectionBuilder implements BuildsExampleInstances
      *
      * @param array<mixed> $parameters
      */
-    public function build(array $parameters): object
+    public function build(array $parameters = []): object
     {
         $target = new ReflectionClass($this->target);
 

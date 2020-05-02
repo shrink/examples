@@ -26,7 +26,7 @@ final class CallableBuilder implements BuildsExampleInstances
      *
      * @param array<mixed> $parameters
      */
-    public function build(array $parameters): object
+    public function build(array $parameters = []): object
     {
         return (object) call_user_func_array(
             $this->builder,

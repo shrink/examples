@@ -2,41 +2,78 @@
 
 Compose example Value Objects and Entities for testing.
 
-## Usage
-
-1. **Register** one or more examples by type
-2. **Make** examples with parameters
-
-### Register
-
-Examples for a `type` are registered to be built by a `BuildsExampleInstances`
-using a set of `default` parameters.
-
 ```php
+use Shrink\Examples\E;
 use Shrink\Examples\Examples;
 
 $examples = new Examples();
 
-$examples->register(
-    $type = Person::class,
+$examples->register(E::define(
+    Person::class,
+    ['name' => 'Alice']
+));
+
+$bob = $examples->make(E::g(Person::class, [
+    'name' => 'Bob',
+]));
+```
+
+## Usage
+
+1. **Register** one or more examples with an example definition.
+2. **Make** examples using an example configuration.
+
+### Register
+
+Examples are registered using an example definition (`DefinesExample`) which in
+turn uses a builder (`BuildsExampleInstances`) to create instances from a set
+of parameters.
+
+```php
+use Shrink\Examples\Definition;
+use Shrink\Examples\Examples;
+use Shrink\Examples\Example;
+
+$examples = new Examples();
+
+$examples->register(new Definition(
+    string Person::class,
     BuildsExampleInstances $builder,
-    $defaults = []
-);
+    array $defaults
+));
+
+$person = $examples->make(new Example(
+    Person::class,
+    array $parameters
+));
 ```
 
 Implicit instance building is handled through Reflection by `ReflectionBuilder`
 which accepts a class name to build.
 
 ```php
+use Shrink\Examples\Definition;
 use Shrink\Examples\ReflectionBuilder;
 
-$examples->register(
+$examples->register(new Definition(
     Person::class,
     new ReflectionBuilder(Person::class),
     [
-        'name' => 'Jane',
+        'name' => 'Alice',
         'age' => 30,
     ]
+));
+```
+
+A shortcut for creating an example definition with implicit building is
+included.
+
+```php
+use Shrink\Examples\E;
+
+$definition = E::define(
+    Person::class,
+    ['name' => 'Alice']
 );
 ```
 
@@ -45,17 +82,18 @@ with the Example parameters as method parameters.
 
 ```php
 use Shrink\Examples\CallableBuilder;
+use Shrink\Examples\Definition;
 
-$examples->register(
+$examples->register(new Definition(
     Person::class,
     new CallableBuilder(
         fn(string $name, int $age): Person => new Person($name, $age)
     ),
     [
-        'name' => 'Jane',
+        'name' => 'Alice',
         'age' => 30
     ]
-);
+));
 ```
 
 ### Make
@@ -77,7 +115,7 @@ Parameters may be provided which will overwrite any defaults.
 use Shrink\Examples\Example;
 
 $person = $examples->make(new Example(Person::class, [
-    'name' => 'Jane Doe',
+    'name' => 'Alice',
 ]));
 ```
 

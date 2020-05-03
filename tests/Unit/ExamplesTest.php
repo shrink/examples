@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Shrink\Examples\BuildsExampleInstances;
 use Shrink\Examples\ConfiguresExample;
+use Shrink\Examples\DefinesExample;
 use Shrink\Examples\Examples;
 use StdClass;
 
@@ -22,15 +23,18 @@ final class ExamplesTest extends TestCase
 
         ($builder = $this->createMock(BuildsExampleInstances::class))
             ->method('build')
-            ->with(['x' => 'y'])
             ->willReturn($expectedExample);
 
         $examples = new Examples();
-        $examples->register(StdClass::class, $builder);
+
+        $definition = $this->createMock(DefinesExample::class);
+        $definition->method('type')->willReturn(StdClass::class);
+        $definition->method('build')->with([])->willReturn($expectedExample);
+
+        $examples->register($definition);
 
         $configuration = $this->createMock(ConfiguresExample::class);
         $configuration->method('type')->willReturn(StdClass::class);
-        $configuration->method('parameters')->willReturn(['x' => 'y']);
 
         $example = $examples->make($configuration);
 
@@ -55,30 +59,29 @@ final class ExamplesTest extends TestCase
     public function ExampleIsMadeWithNestedExamples(): void
     {
         $expectedParent = (object) [
-            'child' => $child = (object) ['x' => 'y'],
+            'child' => $expectedChild = (object) ['x' => 'y'],
         ];
 
+        $examples = new Examples();
+
+        $parentDefinition = $this->createMock(DefinesExample::class);
+        $parentDefinition->method('type')->willReturn('parents');
+        $parentDefinition->method('build')->with(['child' => $expectedChild])->willReturn($expectedParent);
+
+        $childDefinition = $this->createMock(DefinesExample::class);
+        $childDefinition->method('type')->willReturn('children');
+        $childDefinition->method('build')->with(['x' => 'y'])->willReturn($expectedChild);
+
+        $examples->register($parentDefinition);
+        $examples->register($childDefinition);
+
         $childConfiguration = $this->createMock(ConfiguresExample::class);
-        $childConfiguration->method('type')->willReturn('child-objects');
+        $childConfiguration->method('type')->willReturn('children');
         $childConfiguration->method('parameters')->willReturn(['x' => 'y']);
 
-        ($childBuilder = $this->createMock(BuildsExampleInstances::class))
-            ->method('build')
-            ->with(['x' => 'y'])
-            ->willReturn((object) ['x' => 'y']);
-
         $parentConfiguration = $this->createMock(ConfiguresExample::class);
-        $parentConfiguration->method('type')->willReturn('parent-objects');
+        $parentConfiguration->method('type')->willReturn('parents');
         $parentConfiguration->method('parameters')->willReturn(['child' => $childConfiguration]);
-
-        ($parentBuilder = $this->createMock(BuildsExampleInstances::class))
-            ->method('build')
-            ->with(['child' => $child])
-            ->willReturn($expectedParent);
-
-        $examples = new Examples();
-        $examples->register('child-objects', $childBuilder);
-        $examples->register('parent-objects', $parentBuilder);
 
         $parent = $examples->make($parentConfiguration);
 
@@ -95,15 +98,13 @@ final class ExamplesTest extends TestCase
             'x' => 'y',
         ];
 
-        ($builder = $this->createMock(BuildsExampleInstances::class))
-            ->method('build')
-            ->with(['a' => 'b', 'x' => 'y'])
-            ->willReturn($expectedExample);
+        $definition = $this->createMock(DefinesExample::class);
+        $definition->method('type')->willReturn(StdClass::class);
+        $definition->method('defaults')->willReturn(['a' => 'b']);
+        $definition->method('build')->with(['a' => 'b', 'x' => 'y'])->willReturn($expectedExample);
 
         $examples = new Examples();
-        $examples->register(StdClass::class, $builder, [
-            'a' => 'b',
-        ]);
+        $examples->register($definition);
 
         $configuration = $this->createMock(ConfiguresExample::class);
         $configuration->method('type')->willReturn(StdClass::class);

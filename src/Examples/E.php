@@ -15,4 +15,22 @@ final class E
     {
         return new Example($type, $parameters);
     }
+
+    /**
+     * Create an Example definition for a type using the Reflection
+     * Builder.
+     *
+     * @param class-string $type
+     * @param array<mixed> $defaults
+     */
+    public static function define(
+        string $type,
+        array $defaults = []
+    ): Definition {
+        return new Definition(
+            $type,
+            new ReflectionBuilder($type),
+            $defaults
+        );
+    }
 }

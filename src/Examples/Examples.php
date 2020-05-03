@@ -13,31 +13,18 @@ use function array_merge;
 final class Examples
 {
     /**
-     * List of builders keyed by the type they are capable of building.
+     * List of example definitions keyed by the example type.
      *
-     * @var array<\Shrink\Examples\BuildsExampleInstances>
+     * @var array<\Shrink\Examples\DefinesExample>
      */
-    private array $builders = [];
+    private array $definitions = [];
 
     /**
-     * Default values to be used when building an instance.
-     *
-     * @var array<array<mixed>>
+     * Register a new example definition.
      */
-    private array $defaults = [];
-
-    /**
-     * Register a new builder for type.
-     *
-     * @param array<mixed> $defaults
-     */
-    public function register(
-        string $type,
-        BuildsExampleInstances $builder,
-        array $defaults = []
-    ): void {
-        $this->builders[$type] = $builder;
-        $this->defaults[$type] = $defaults;
+    public function register(DefinesExample $definition): void
+    {
+        $this->definitions[$definition->type()] = $definition;
     }
 
     /**
@@ -47,18 +34,20 @@ final class Examples
     {
         $type = $configuration->type();
 
-        if (! array_key_exists($type, $this->builders)) {
+        if (! array_key_exists($type, $this->definitions)) {
             throw new InvalidArgumentException(
                 "{$type} is not registered, an example cannot be built."
             );
         }
 
+        $definition = $this->definitions[$configuration->type()];
+
         $parameters = $this->fillParameters(array_merge(
-            $this->defaults[$type],
+            $definition->defaults(),
             $configuration->parameters()
         ));
 
-        return $this->builders[$type]->build($parameters);
+        return $definition->build($parameters);
     }
 
     /**

@@ -1,6 +1,8 @@
 # Examples
 
-Compose example Value Objects and Entities for testing.
+[![Packagist](https://img.shields.io/packagist/v/shrink/examples.svg)][packagist]
+
+Compose example Entities and Value Objects for testing.
 
 ```php
 use Shrink\Examples\E;
@@ -8,10 +10,10 @@ use Shrink\Examples\Examples;
 
 $examples = new Examples();
 
-$examples->register(E::define(
-    Person::class,
-    ['name' => 'Alice']
-));
+$examples->register(E::define(Person::class, [
+    'name' => 'Alice',
+    'age'  => 30,
+]));
 
 $bob = $examples->make(E::g(Person::class, [
     'name' => 'Bob',
@@ -20,8 +22,15 @@ $bob = $examples->make(E::g(Person::class, [
 
 ## Usage
 
-1. **Register** one or more examples with an example definition.
-2. **Make** examples using an example configuration.
+1. **Install** the library with composer
+2. **Register** example definitions
+3. **Make** examples with optional parameters
+
+### Install
+
+```console
+dev:~$ composer require shrink/examples --dev
+```
 
 ### Register
 
@@ -71,10 +80,9 @@ included.
 ```php
 use Shrink\Examples\E;
 
-$definition = E::define(
-    Person::class,
-    ['name' => 'Alice']
-);
+$definition = E::define(Person::class, [
+    'name' => 'Alice'
+]);
 ```
 
 Explicit instance building is handled by providing a callable which is called
@@ -141,3 +149,4 @@ dev:~$ git config core.hooksPath .meta/githooks
 Examples is open-sourced software licensed under the [MIT license][mit-license].
 
 [mit-license]: https://choosealicense.com/licenses/mit/
+[packagist]: https://packagist.org/packages/shrink/examples

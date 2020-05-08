@@ -80,10 +80,9 @@ included.
 ```php
 use Shrink\Examples\E;
 
-$definition = E::define(
-    Person::class,
-    ['name' => 'Alice']
-);
+$definition = E::define(Person::class, [
+    'name' => 'Alice'
+]);
 ```
 
 Explicit instance building is handled by providing a callable which is called

@@ -1,40 +1,40 @@
 {
-    "name": "shrink/examples",
-    "type": "library",
-    "description": "Compose example Value Objects and Entities for testing",
-    "license": "MIT",
-    "require": {
-        "php": "^7.4"
-    },
-    "require-dev": {
-        "nunomaduro/phpinsights": "^1.14",
-        "phpunit/phpunit": "^9.0",
-        "vimeo/psalm": "^3.11"
-    },
-    "autoload": {
-        "psr-4": {
-            "Shrink\\Examples\\": "src/Examples/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "quality": [
-            "@test",
-            "@static",
-            "@insights"
-        ],
-        "test": [
-            "vendor/bin/phpunit --colors=always"
-        ],
-        "insights": [
-            "vendor/bin/phpinsights --ansi --no-interaction --config-path=.meta/phpinsights.php"
-        ],
-        "static": [
-            "vendor/bin/psalm --long-progress"
-        ]
+  "name": "shrink/examples",
+  "type": "library",
+  "description": "Compose example Value Objects and Entities for testing",
+  "license": "MIT",
+  "require": {
+    "php": "^7.4"
+  },
+  "require-dev": {
+    "nunomaduro/phpinsights": "^1.14",
+    "phpunit/phpunit": "^9.0",
+    "vimeo/psalm": "^3.11"
+  },
+  "autoload": {
+    "psr-4": {
+      "Shrink\\Examples\\": "src/Examples/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "check": [
+      "@test",
+      "@static",
+      "@insights"
+    ],
+    "test": [
+      "vendor/bin/phpunit --colors=always"
+    ],
+    "insights": [
+      "vendor/bin/phpinsights --ansi --no-interaction --config-path=insights.php"
+    ],
+    "static": [
+      "vendor/bin/psalm --long-progress"
+    ]
+  }
 }

@@ -20,6 +20,9 @@ $bob = $examples->make(E::g(Person::class, [
 ]));
 ```
 
+* [Usage](#usage)
+* [Contributing](#contributing)
+
 ## Usage
 
 1. **Install** the library with composer
@@ -135,13 +138,15 @@ use Shrink\Examples\E;
 $person = $examples->make(E::g(Person::class));
 ```
 
-## Hooks
+## Contributing
+
+### Hooks
 
 A set of Git Hooks are included for ensuring compliance with code requirements,
 enable them by running the following command:
 
 ```console
-dev:~$ git config core.hooksPath .meta/githooks
+dev:~$ git config core.hooksPath .github/hooks
 ```
 
 ## License

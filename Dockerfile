@@ -1,20 +1,17 @@
-FROM php:7.4-cli-alpine as build
+ARG PHP_VERSION=7.4
+ARG COMPOSER_VERSION=1
+ARG COMPOSER=composer:${COMPOSER_VERSION}
+
+FROM $COMPOSER AS composer
+
+FROM php:${PHP_VERSION}-cli-alpine
 
 WORKDIR /srv
 
-COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
+RUN apk add --no-cache git
 
-COPY composer.json composer.lock /srv/
-RUN composer global require hirak/prestissimo --dev && \
-    composer install \
-        --no-ansi \
-        --no-autoloader \
-        --no-interaction
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-COPY . /srv
-
-RUN composer dump-autoload
-
-FROM build as quality
-
-RUN composer quality
+COPY composer.json composer.lock ./
+RUN composer global require hirak/prestissimo --dev --prefer-dist && \
+    composer install --no-ansi --no-interaction

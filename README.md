@@ -25,9 +25,9 @@ $bob = $examples->make(E::g(Person::class, [
 
 ## Usage
 
-1. **Install** the library with composer
-2. **Register** example definitions
-3. **Make** examples with optional parameters
+1. [**Install**](#install) the library with composer
+2. [**Register**](#register) example definitions
+3. [**Make**](#make) examples with optional parameters
 
 ### Install
 

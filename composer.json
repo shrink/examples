@@ -34,7 +34,7 @@
       "vendor/bin/phpinsights --ansi --no-interaction --config-path=insights.php"
     ],
     "static": [
-      "vendor/bin/psalm --long-progress"
+      "vendor/bin/psalm --long-progress --report=psalm.junit.xml"
     ]
   }
 }

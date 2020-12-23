@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shrink\Examples;
 
 use InvalidArgumentException;
+
 use function array_filter;
 use function array_key_exists;
 use function array_map;

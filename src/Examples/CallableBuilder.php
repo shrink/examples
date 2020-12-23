@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shrink\Examples;
 
 use Closure;
+
 use function call_user_func_array;
 
 final class CallableBuilder implements BuildsExampleInstances

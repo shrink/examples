@@ -7,6 +7,7 @@ namespace Shrink\Examples;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
+
 use function array_map;
 use function array_merge;
 use function array_values;

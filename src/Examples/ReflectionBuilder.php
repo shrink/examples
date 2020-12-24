@@ -7,6 +7,7 @@ namespace Shrink\Examples;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
+
 use function array_map;
 use function array_merge;
 use function array_values;
@@ -68,7 +69,12 @@ final class ReflectionBuilder implements BuildsExampleInstances
             $constructor
         );
 
-        return array_merge($constructorParameters, $parameters);
+        $validParameters = array_intersect_key(
+            $parameters,
+            $constructorParameters
+        );
+
+        return array_merge($constructorParameters, $validParameters);
     }
 
     /**

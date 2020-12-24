@@ -17,11 +17,11 @@ final class ReflectionBuilderTest extends TestCase
     {
         $reflectionBuilder = new ReflectionBuilder(Person::class);
 
-        $expectedPerson = new Person('person-id', 'Jane', 30);
+        $expectedPerson = new Person('person-id', 30, 'Alice');
 
         $person = $reflectionBuilder->build([
             'id' => 'person-id',
-            'name' => 'Jane',
+            'name' => 'Alice',
             'age' => 30,
         ]);
 
@@ -35,12 +35,12 @@ final class ReflectionBuilderTest extends TestCase
     {
         $reflectionBuilder = new ReflectionBuilder(Person::class);
 
-        $expectedPerson = new Person('person-id', 'Jane', 30);
+        $expectedPerson = new Person('person-id', 30, 'Alice');
 
         $person = $reflectionBuilder->build([
             'age' => 30,
             'id' => 'person-id',
-            'name' => 'Jane',
+            'name' => 'Alice',
         ]);
 
         $this->assertEquals($expectedPerson, $person);
@@ -53,11 +53,11 @@ final class ReflectionBuilderTest extends TestCase
     {
         $reflectionBuilder = new ReflectionBuilder(Person::class);
 
-        $expectedPerson = new Person('person-id', 'Jane', 30);
+        $expectedPerson = new Person('person-id', 30, 'Alice');
 
         $person = $reflectionBuilder->build([
             'id' => 'person-id',
-            'name' => 'Jane',
+            'name' => 'Alice',
             'invalid-parameter' => 'Hello, World!',
             'age' => 30,
         ]);
@@ -84,7 +84,7 @@ final class ReflectionBuilderTest extends TestCase
     {
         $reflectionBuilder = new ReflectionBuilder(Person::class);
 
-        $expectedPerson = new Person('person-id', 'Default', 30);
+        $expectedPerson = new Person('person-id', 30);
 
         $person = $reflectionBuilder->build([
             'id' => 'person-id',
@@ -115,7 +115,7 @@ final class Person
     private string $name;
     private int $age;
 
-    public function __construct(string $id, string $name = 'Default', int $age)
+    public function __construct(string $id, int $age, string $name = 'Default')
     {
         $this->id = $id;
         $this->name = $name;

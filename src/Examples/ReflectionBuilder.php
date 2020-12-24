@@ -69,7 +69,12 @@ final class ReflectionBuilder implements BuildsExampleInstances
             $constructor
         );
 
-        return array_merge($constructorParameters, $parameters);
+        $validParameters = array_intersect_key(
+            $parameters,
+            $constructorParameters
+        );
+
+        return array_merge($constructorParameters, $validParameters);
     }
 
     /**

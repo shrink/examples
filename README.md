@@ -27,6 +27,7 @@ $examplePersonDefinition = E::define(
 $example = $examples->make(E::g(Person::class, name: "Bob"));
 
 echo "Hello, {$example->name} (age {$example->age}).";
+// Hello, Bob (age 30).
 ```
 
 - [Usage](#usage)

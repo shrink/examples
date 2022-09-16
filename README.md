@@ -64,8 +64,9 @@ arguments containing the example's default values.
 ```php
 use Shrink\Examples\E;
 
-$examplePersonDefinition = E::define(Person::class, name: "Alice", age: 30);
-$examples->register($examplePersonDefinition);
+$examples->register(
+    E::define(Person::class, name: "Alice", age: 30)
+);
 ```
 
 :sparkles: Since v2, named arguments are used instead of a parameters array.
@@ -73,13 +74,15 @@ $examples->register($examplePersonDefinition);
 ### Make An Example
 
 The `E::g()` method accepts a class `type` and zero or more named arguments
-containing the example values that will replace any defaults.
+containing the values that will replace any defaults.
 
 ```php
 use Shrink\Examples\E;
 
-$person = $examples->make(E::g(Person::class, age: 40));
-// $person == new Person(name: "Alice", age: 40);
+$example = $examples->make(E::g(Person::class, name: "Bob"));
+
+echo "Hello, {$example->name} (age {$example->age}).";
+// Hello, Bob (age 30).
 ```
 
 ### Advanced Usage

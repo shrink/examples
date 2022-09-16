@@ -2,32 +2,41 @@
 
 [![Packagist](https://img.shields.io/packagist/v/shrink/examples.svg)][packagist]
 
-Compose example Entities and Value Objects for testing.
+Compose example objects.
 
 ```php
 use Shrink\Examples\E;
 use Shrink\Examples\Examples;
 
-$examples = new Examples();
+final class Person
+{
+    public function __construct(
+        public readonly string $name,
+        public readonly int $age
+    ) {}
+};
 
-$examples->register(E::define(Person::class, [
-    'name' => 'Alice',
-    'age'  => 30,
-]));
+$examplePersonDefinition = E::define(
+    Person::class,
+    name: "Alice",
+    age: 30
+);
 
-$bob = $examples->make(E::g(Person::class, [
-    'name' => 'Bob',
-]));
+($examples = new Examples())->register($examplePersonDefinition);
+
+$example = $examples->make(E::g(Person::class, name: "Bob"));
+
+echo "Hello, {$example->name} (age {$example->age}).";
 ```
 
-* [Usage](#usage)
-* [Contributing](#contributing)
+- [Usage](#usage)
+- [Contributing](#contributing)
 
 ## Usage
 
 1. [**Install**](#install) the library with composer
-2. [**Register**](#register) example definitions
-3. [**Make**](#make) examples with optional parameters
+2. [**Define**](#define-example-template) example templates
+3. [**Make**](#make-an-example) examples
 
 ### Install
 
@@ -35,7 +44,46 @@ $bob = $examples->make(E::g(Person::class, [
 dev:~$ composer require shrink/examples --dev
 ```
 
-### Register
+### Instantiate Examples
+
+An `Examples::class` instance holds your example template definitions and
+creates your examples from these definitions.
+
+```php
+use Shrink\Examples\Examples;
+
+$examples = new Examples();
+```
+
+### Define Example Template
+
+The `E::define()` method accepts a class `type` and zero or more named
+arguments containing the example's default values.
+
+```php
+use Shrink\Examples\E;
+
+$examplePersonDefinition = E::define(Person::class, name: "Alice", age: 30);
+$examples->register($examplePersonDefinition);
+```
+
+:sparkles: Since v2, named arguments are used instead of a parameters array.
+
+### Make An Example
+
+The `E::g()` method accepts a class `type` and zero or more named arguments
+containing the example values that will replace any defaults.
+
+```php
+use Shrink\Examples\E;
+
+$person = $examples->make(E::g(Person::class, age: 40));
+// $person == new Person(name: "Alice", age: 40);
+```
+
+### Advanced Usage
+
+#### Register an Example
 
 Examples are registered using an example definition (`DefinesExample`) which in
 turn uses a builder (`BuildsExampleInstances`) to create instances from a set
@@ -49,7 +97,7 @@ use Shrink\Examples\Example;
 $examples = new Examples();
 
 $examples->register(new Definition(
-    string Person::class,
+    Person::class,
     BuildsExampleInstances $builder,
     array $defaults
 ));
@@ -77,16 +125,8 @@ $examples->register(new Definition(
 ));
 ```
 
-A shortcut for creating an example definition with implicit building is
-included.
-
-```php
-use Shrink\Examples\E;
-
-$definition = E::define(Person::class, [
-    'name' => 'Alice'
-]);
-```
+`E::define()` is a shortcut for creating an example definition with implicit
+building.
 
 Explicit instance building is handled by providing a callable which is called
 with the Example parameters as method parameters.
@@ -107,7 +147,7 @@ $examples->register(new Definition(
 ));
 ```
 
-### Make
+#### Make an Example
 
 Examples are configured with a `type` and `parameters`. Ask the `Examples`
 instance to `make(ConfiguresExample $configuration)`. A default implementation
@@ -120,7 +160,7 @@ use Shrink\Examples\Example;
 $person = $examples->make(new Example(Person::class));
 ```
 
-Parameters may be provided which will overwrite any defaults.
+Parameters may be provided to overwrite any defaults.
 
 ```php
 use Shrink\Examples\Example;
@@ -128,14 +168,6 @@ use Shrink\Examples\Example;
 $person = $examples->make(new Example(Person::class, [
     'name' => 'Alice',
 ]));
-```
-
-An additional shortcut is available for creating an example configuration:
-
-```php
-use Shrink\Examples\E;
-
-$person = $examples->make(E::g(Person::class));
 ```
 
 ## Contributing

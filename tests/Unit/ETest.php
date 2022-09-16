@@ -18,9 +18,9 @@ final class ETest extends TestCase
      */
     public function ExampleIsBuiltForType(): void
     {
-        $example = E::g('type');
+        $example = E::g(type: 'type');
 
-        $expectedExample = new Example('type', []);
+        $expectedExample = new Example(type: 'type');
 
         $this->assertEquals($expectedExample, $example);
     }
@@ -30,9 +30,9 @@ final class ETest extends TestCase
      */
     public function ExampleIsBuiltForTypeWithParameters(): void
     {
-        $example = E::g('type', ['x' => 'y']);
+        $example = E::g(type: 'type', x: "y");
 
-        $expectedExample = new Example('type', ['x' => 'y']);
+        $expectedExample = new Example(type: 'type', parameters: ["x" => "y"]);
 
         $this->assertEquals($expectedExample, $example);
     }
@@ -48,9 +48,7 @@ final class ETest extends TestCase
             ['x' => 'y']
         );
 
-        $definition = E::define(StdClass::class, [
-            'x' => 'y',
-        ]);
+        $definition = E::define(StdClass::class, x: "y");
 
         $this->assertEquals($expectedDefinition, $definition);
     }

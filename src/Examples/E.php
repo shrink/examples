@@ -11,7 +11,7 @@ final class E
      *
      * @param array<mixed> $parameters
      */
-    public static function g(string $type, array $parameters = []): Example
+    public static function g(string $type, ...$parameters): Example
     {
         return new Example($type, $parameters);
     }
@@ -25,7 +25,7 @@ final class E
      */
     public static function define(
         string $type,
-        array $defaults = []
+        ...$defaults
     ): Definition {
         return new Definition(
             $type,

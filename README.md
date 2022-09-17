@@ -24,10 +24,12 @@ $examplePersonDefinition = E::define(
 
 ($examples = new Examples())->register($examplePersonDefinition);
 
-$example = $examples->make(E::g(Person::class, name: "Bob"));
+$person = $examples->make(E::g(Person::class, name: "Bob"));
 
-echo "Hello, {$example->name} (age {$example->age}).";
-// Hello, Bob (age 30).
+self::assertSame(
+    "Hello, Bob (age 30).",
+    "Hello, {$person->name} (age {$person->age})."
+);
 ```
 
 - [Usage](#usage)
@@ -191,3 +193,4 @@ Examples is open-sourced software licensed under the [MIT license][mit-license].
 
 [mit-license]: https://choosealicense.com/licenses/mit/
 [packagist]: https://packagist.org/packages/shrink/examples
+[examples/v1]: https://github.com/shrink/examples/releases/tag/v1

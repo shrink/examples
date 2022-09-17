@@ -91,7 +91,7 @@ echo "Hello, {$example->name} (age {$example->age}).";
 
 #### Nested Examples
 
-`Examples::class` will resolve any example definitions it encounters when making
+[Examples::class] will resolve any example definitions it encounters when making
 an example, allowing for many levels of nested example definitions and
 configuration.
 
@@ -247,3 +247,4 @@ Examples is open-sourced software licensed under the [MIT license][mit-license].
 [mit-license]: https://choosealicense.com/licenses/mit/
 [packagist]: https://packagist.org/packages/shrink/examples
 [examples/v1]: https://github.com/shrink/examples/releases/tag/v1
+[examples::class]: src/Examples/Examples.php

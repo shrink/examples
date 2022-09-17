@@ -47,6 +47,9 @@ self::assertSame(
 dev:~$ composer require shrink/examples --dev
 ```
 
+:yarn: The latest version of Examples requires PHP 8.1, use
+[Examples v1][examples/v1] for PHP 7.4 and PHP 8.0 support.
+
 ### Instantiate Examples
 
 An `Examples::class` instance holds your example template definitions and
@@ -246,5 +249,5 @@ Examples is open-sourced software licensed under the [MIT license][mit-license].
 
 [mit-license]: https://choosealicense.com/licenses/mit/
 [packagist]: https://packagist.org/packages/shrink/examples
-[examples/v1]: https://github.com/shrink/examples/releases/tag/v1
+[examples/v1]: https://github.com/shrink/examples/tree/v1
 [examples::class]: src/Examples/Examples.php

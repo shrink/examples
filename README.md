@@ -1,9 +1,11 @@
 # Examples
 
-[![Packagist](https://img.shields.io/packagist/v/shrink/examples.svg)][packagist]
+[![Packagist](https://img.shields.io/badge/packagist-outdated-orange.svg)][packagist]
 
-:wilted_flower: You're viewing an outdated and unmaintained version of Examples.
-Please use the [latest version][latest] when possible.
+:wilted_flower: You're viewing an outdated version of Examples. Please use the
+[latest version][latest] when possible.
+
+---
 
 Compose example Entities and Value Objects for testing.
 
@@ -34,8 +36,8 @@ $bob = $examples->make(E::g(Person::class, [
 
 ### Install
 
-:wilted_flower: You're viewing an outdated and unmaintained version of Examples.
-Please use the [latest version][latest] when possible.
+:wilted_flower: You're viewing an outdated version of Examples. Please use the
+[latest version][latest] when possible.
 
 ```console
 dev:~$ composer require shrink/examples:1 --dev

@@ -87,9 +87,62 @@ echo "Hello, {$example->name} (age {$example->age}).";
 // Hello, Bob (age 30).
 ```
 
-### Advanced Usage
+### Features
 
-#### Register an Example
+#### Nested Examples
+
+[Examples::class] will resolve any example definitions it encounters when making
+an example, allowing for many levels of nested example definitions and
+configuration.
+
+```php
+final class Person
+{
+    public function __construct(
+        public readonly string $name,
+        public readonly int $age,
+        public readonly ?Location $location
+    ) {}
+};
+
+final class Location
+{
+    public function __construct(
+        public readonly string $streetAddress,
+        public readonly string $country
+    ) {}
+}
+
+$examples = new Examples();
+
+$examples->register(E::define(
+    Location::class,
+    streetAddress: "123 Default Street",
+    country: "England"
+));
+
+$examples->register(E::define(
+    Person::class,
+    name: "Alice",
+    age: 30,
+    location: E::g(Location::class, country: "United States")
+));
+
+$person = $examples->make(E::g(
+    Person::class,
+    name: "Bob",
+    location: E::g(Location::class, country: "The Netherlands")
+));
+
+self::assertSame(
+    "Hello, {$person->name} (age {$person->age}) from {$person->location->country}.",
+    "Hello, Bob (age 30) from The Netherlands."
+);
+```
+
+## Internals
+
+### Registration
 
 Examples are registered using an example definition (`DefinesExample`) which in
 turn uses a builder (`BuildsExampleInstances`) to create instances from a set
@@ -153,7 +206,7 @@ $examples->register(new Definition(
 ));
 ```
 
-#### Make an Example
+#### Creation
 
 Examples are configured with a `type` and `parameters`. Ask the `Examples`
 instance to `make(ConfiguresExample $configuration)`. A default implementation
@@ -194,3 +247,4 @@ Examples is open-sourced software licensed under the [MIT license][mit-license].
 [mit-license]: https://choosealicense.com/licenses/mit/
 [packagist]: https://packagist.org/packages/shrink/examples
 [examples/v1]: https://github.com/shrink/examples/releases/tag/v1
+[examples::class]: src/Examples/Examples.php

@@ -2,6 +2,9 @@
 
 [![Packagist](https://img.shields.io/packagist/v/shrink/examples.svg)][packagist]
 
+:wilted_flower: You're viewing an outdated and unmaintained version of Examples.
+Please use the [latest version][latest] when possible.
+
 Compose example Entities and Value Objects for testing.
 
 ```php
@@ -20,8 +23,8 @@ $bob = $examples->make(E::g(Person::class, [
 ]));
 ```
 
-* [Usage](#usage)
-* [Contributing](#contributing)
+- [Usage](#usage)
+- [Contributing](#contributing)
 
 ## Usage
 
@@ -31,8 +34,11 @@ $bob = $examples->make(E::g(Person::class, [
 
 ### Install
 
+:wilted_flower: You're viewing an outdated and unmaintained version of Examples.
+Please use the [latest version][latest] when possible.
+
 ```console
-dev:~$ composer require shrink/examples --dev
+dev:~$ composer require shrink/examples:1 --dev
 ```
 
 ### Register
@@ -155,3 +161,4 @@ Examples is open-sourced software licensed under the [MIT license][mit-license].
 
 [mit-license]: https://choosealicense.com/licenses/mit/
 [packagist]: https://packagist.org/packages/shrink/examples
+[latest]: https://github.com/shrink/examples

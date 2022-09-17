@@ -40,7 +40,7 @@ final class ReflectionBuilder implements BuildsExampleInstances
 
         $constructor = $target->getConstructor();
 
-        if (is_null($constructor)) {
+        if ($constructor === null) {
             return $target->newInstance();
         }
 
@@ -101,6 +101,6 @@ final class ReflectionBuilder implements BuildsExampleInstances
             $method->getParameters()
         );
 
-        return array_merge(...array_values($methodParameters));
+        return array_merge(...$methodParameters);
     }
 }

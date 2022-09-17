@@ -15,6 +15,9 @@
     <testsuite name="unit">
       <directory suffix="Test.php">./tests/Unit</directory>
     </testsuite>
+    <testsuite name="docs">
+      <directory suffix="Test.php">./tests/Documentation</directory>
+    </testsuite>
   </testsuites>
   <logging>
     <junit outputFile="phpunit.junit.xml"/>

@@ -35,8 +35,8 @@ self::assertSame(
 ## Usage
 
 1. [**Install**](#install) the library with composer
-2. [**Define**](#define-example-template) example templates
-3. [**Make**](#make-an-example) examples
+2. [**Define**](#define-example) examples
+3. [**Make**](#make-an-object) objects
 
 ### Install
 
@@ -49,8 +49,8 @@ dev:~$ composer require shrink/examples --dev
 
 ### Instantiate Examples
 
-An `Examples::class` instance holds your example template definitions and
-creates your examples from these definitions.
+An `Examples::class` instance holds your example definitions and creates your
+objects from these definitions.
 
 ```php
 use Shrink\Examples\Examples;
@@ -58,10 +58,11 @@ use Shrink\Examples\Examples;
 $examples = new Examples();
 ```
 
-### Define Example Template
+### Define Examples
 
 The `E::define()` method accepts a class `type` and zero or more named
-arguments containing the example's default values.
+arguments, which map to the `type`'s constructor arguments.
+`E::define()` returns a definition to register with your instance of Examples.
 
 ```php
 use Shrink\Examples\E;
@@ -71,10 +72,14 @@ $examples->register(E::define(Person::class, name: "Alice", age: 30));
 
 :sparkles: Since v2, named arguments are used instead of a parameters array.
 
-### Make An Example
+:dna: `E::define()` is a shortcut to create a simple example definition, see
+[Internals -> Definition](#definition) for building your own implementation.
 
-The `E::g()` method accepts a class `type` and zero or more named arguments
-containing the values that will replace any defaults.
+### Make An Object
+
+The `E::g()` method accepts a class `type` (referring to a registered example)
+and zero or more named arguments to overwrite the example defaults. `E::g()`
+returns an example configuration, which your instance of Examples will `make()`.
 
 ```php
 use Shrink\Examples\E;
@@ -84,6 +89,9 @@ $example = $examples->make(E::g(Person::class, name: "Bob"));
 echo "Hello, {$example->name} (age {$example->age}).";
 // Hello, Bob (age 30).
 ```
+
+:dna: `E::g()` is a shortcut to create a simple example configuration, see
+[Internals -> Creation](#creation) for building your own implementation.
 
 ### Features
 
@@ -148,11 +156,11 @@ self::assertSame(
 
 ## Internals
 
-### Registration
+### Definition
 
 Examples are registered using an example definition (`DefinesExample`) which in
-turn uses a builder (`BuildsExampleInstances`) to create instances from a set
-of parameters.
+turn uses a builder (`BuildsExampleInstances`) to create an object using
+optional configuration.
 
 ```php
 use Shrink\Examples\Definition;
@@ -189,10 +197,8 @@ $examples->register(
 ```
 
 `E::define()` is a shortcut for creating an example definition with implicit
-building.
-
-Explicit instance building is handled by providing a callable which is called
-with the Example parameters as method parameters.
+building. Explicit instance building is handled by providing a callable which is
+called with the Example parameters as method parameters.
 
 ```php
 use Shrink\Examples\CallableBuilder;
@@ -214,9 +220,10 @@ $examples->register(
 
 #### Creation
 
-Examples are configured with a `type` and `parameters`. Ask the `Examples`
-instance to `make(ConfiguresExample $configuration)`. A default implementation
-of `ConfiguresExample` is included which is constructed with the type and
+Objects are made, from an example, with an optional configuration of
+`parameters`. Ask the `Examples` instance to
+`make(ConfiguresExample $configuration)`. A default implementation of
+`ConfiguresExample` is included which is constructed with the type and
 parameters.
 
 ```php

@@ -61,8 +61,8 @@ $examples = new Examples();
 ### Define Examples
 
 The `E::define()` method accepts a class `type` and zero or more named
-arguments containing the example's default values. Register definitions with
-your Examples instance.
+arguments, which map to the `type`'s constructor arguments.
+`E::define()` returns a definition to register with your instance of Examples.
 
 ```php
 use Shrink\Examples\E;
@@ -75,7 +75,8 @@ $examples->register(E::define(Person::class, name: "Alice", age: 30));
 ### Make An Object
 
 The `E::g()` method accepts a class `type` (referring to a registered example)
-and zero or more named arguments to overwrite the example defaults.
+and zero or more named arguments to overwrite the example defaults. `E::g()`
+returns an example configuration, which your instance of Examples will `make()`.
 
 ```php
 use Shrink\Examples\E;

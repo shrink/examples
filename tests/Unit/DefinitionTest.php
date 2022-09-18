@@ -17,18 +17,18 @@ final class DefinitionTest extends TestCase
     public function InstanceIsBuiltWithParameters(): void
     {
         $parameters = [
-            'x' => 'y',
-            'a' => 'b',
+            "x" => "y",
+            "a" => "b",
         ];
 
         $expectedInstance = (object) $parameters;
 
         ($builder = $this->createMock(BuildsExampleInstances::class))
-            ->method('build')
+            ->method("build")
             ->with($parameters)
             ->willReturn($expectedInstance);
 
-        $definition = new Definition('type', $builder);
+        $definition = new Definition("type", $builder);
 
         $instance = $definition->build($parameters);
 
@@ -41,12 +41,12 @@ final class DefinitionTest extends TestCase
     public function DefinitionProvidesDefaults(): void
     {
         $defaults = [
-            'x' => 'y',
-            'a' => 'b',
+            "x" => "y",
+            "a" => "b",
         ];
 
         $definition = new Definition(
-            'type',
+            "type",
             $this->createMock(BuildsExampleInstances::class),
             $defaults
         );

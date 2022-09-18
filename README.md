@@ -72,6 +72,9 @@ $examples->register(E::define(Person::class, name: "Alice", age: 30));
 
 :sparkles: Since v2, named arguments are used instead of a parameters array.
 
+:dna: `E::define()` is a shortcut to create a simple example definition, see
+[Internals -> Definition](#definition) for building your own implementation.
+
 ### Make An Object
 
 The `E::g()` method accepts a class `type` (referring to a registered example)
@@ -86,6 +89,9 @@ $example = $examples->make(E::g(Person::class, name: "Bob"));
 echo "Hello, {$example->name} (age {$example->age}).";
 // Hello, Bob (age 30).
 ```
+
+:dna: `E::g()` is a shortcut to create a simple example configuration, see
+[Internals -> Creation](#creation) for building your own implementation.
 
 ### Features
 
@@ -150,7 +156,7 @@ self::assertSame(
 
 ## Internals
 
-### Registration
+### Definition
 
 Examples are registered using an example definition (`DefinesExample`) which in
 turn uses a builder (`BuildsExampleInstances`) to create an object using

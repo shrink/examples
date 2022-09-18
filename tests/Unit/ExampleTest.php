@@ -14,12 +14,12 @@ final class ExampleTest extends TestCase
      */
     public function ExampleIsConfiguredByParameters(): void
     {
-        $example = new Example('example', [
-            'x' => 'y',
-            'a' => 'b',
+        $example = new Example("example", [
+            "x" => "y",
+            "a" => "b",
         ]);
 
-        $this->assertSame('example', $example->type());
-        $this->assertSame(['x' => 'y', 'a' => 'b'], $example->parameters());
+        $this->assertSame("example", $example->type());
+        $this->assertSame(["x" => "y", "a" => "b"], $example->parameters());
     }
 }

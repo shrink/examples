@@ -1,0 +1,6 @@
+/vendor
+/node_modules
+.phpunit.results.cache
+composer.lock
+package-lock.json
+*.junit.xml

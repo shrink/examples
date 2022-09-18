@@ -10,25 +10,22 @@ use Shrink\Examples\Examples;
 
 final class Person
 {
-    public function __construct(
-        public readonly string $name,
-        public readonly int $age
-    ) {}
-};
+  public function __construct(
+    public readonly string $name,
+    public readonly int $age
+  ) {
+  }
+}
 
-$examplePersonDefinition = E::define(
-    Person::class,
-    name: "Alice",
-    age: 30
-);
+$examplePersonDefinition = E::define(Person::class, name: "Alice", age: 30);
 
 ($examples = new Examples())->register($examplePersonDefinition);
 
 $person = $examples->make(E::g(Person::class, name: "Bob"));
 
 self::assertSame(
-    "Hello, Bob (age 30).",
-    "Hello, {$person->name} (age {$person->age})."
+  "Hello, Bob (age 30).",
+  "Hello, {$person->name} (age {$person->age})."
 );
 ```
 
@@ -69,9 +66,7 @@ arguments containing the example's default values.
 ```php
 use Shrink\Examples\E;
 
-$examples->register(
-    E::define(Person::class, name: "Alice", age: 30)
-);
+$examples->register(E::define(Person::class, name: "Alice", age: 30));
 ```
 
 :sparkles: Since v2, named arguments are used instead of a parameters array.
@@ -101,45 +96,53 @@ configuration.
 ```php
 final class Person
 {
-    public function __construct(
-        public readonly string $name,
-        public readonly int $age,
-        public readonly ?Location $location
-    ) {}
-};
+  public function __construct(
+    public readonly string $name,
+    public readonly int $age,
+    public readonly ?Location $location
+  ) {
+  }
+}
 
 final class Location
 {
-    public function __construct(
-        public readonly string $streetAddress,
-        public readonly string $country
-    ) {}
+  public function __construct(
+    public readonly string $streetAddress,
+    public readonly string $country
+  ) {
+  }
 }
 
 $examples = new Examples();
 
-$examples->register(E::define(
+$examples->register(
+  E::define(
     Location::class,
     streetAddress: "123 Default Street",
     country: "England"
-));
+  )
+);
 
-$examples->register(E::define(
+$examples->register(
+  E::define(
     Person::class,
     name: "Alice",
     age: 30,
     location: E::g(Location::class, country: "United States")
-));
+  )
+);
 
-$person = $examples->make(E::g(
+$person = $examples->make(
+  E::g(
     Person::class,
     name: "Bob",
     location: E::g(Location::class, country: "The Netherlands")
-));
+  )
+);
 
 self::assertSame(
-    "Hello, {$person->name} (age {$person->age}) from {$person->location->country}.",
-    "Hello, Bob (age 30) from The Netherlands."
+  "Hello, {$person->name} (age {$person->age}) from {$person->location->country}.",
+  "Hello, Bob (age 30) from The Netherlands."
 );
 ```
 
@@ -177,14 +180,12 @@ which accepts a class name to build.
 use Shrink\Examples\Definition;
 use Shrink\Examples\ReflectionBuilder;
 
-$examples->register(new Definition(
-    Person::class,
-    new ReflectionBuilder(Person::class),
-    [
-        'name' => 'Alice',
-        'age' => 30,
-    ]
-));
+$examples->register(
+  new Definition(Person::class, new ReflectionBuilder(Person::class), [
+    "name" => "Alice",
+    "age" => 30,
+  ])
+);
 ```
 
 `E::define()` is a shortcut for creating an example definition with implicit
@@ -197,16 +198,18 @@ with the Example parameters as method parameters.
 use Shrink\Examples\CallableBuilder;
 use Shrink\Examples\Definition;
 
-$examples->register(new Definition(
+$examples->register(
+  new Definition(
     Person::class,
     new CallableBuilder(
-        fn(string $name, int $age): Person => new Person($name, $age)
+      fn(string $name, int $age): Person => new Person($name, $age)
     ),
     [
-        'name' => 'Alice',
-        'age' => 30
+      "name" => "Alice",
+      "age" => 30,
     ]
-));
+  )
+);
 ```
 
 #### Creation
@@ -227,9 +230,11 @@ Parameters may be provided to overwrite any defaults.
 ```php
 use Shrink\Examples\Example;
 
-$person = $examples->make(new Example(Person::class, [
-    'name' => 'Alice',
-]));
+$person = $examples->make(
+  new Example(Person::class, [
+    "name" => "Alice",
+  ])
+);
 ```
 
 ## Contributing

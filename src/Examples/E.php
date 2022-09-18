@@ -23,14 +23,8 @@ final class E
      * @param class-string $type
      * @param array<mixed> $defaults
      */
-    public static function define(
-        string $type,
-        ...$defaults
-    ): Definition {
-        return new Definition(
-            $type,
-            new ReflectionBuilder($type),
-            $defaults
-        );
+    public static function define(string $type, ...$defaults): Definition
+    {
+        return new Definition($type, new ReflectionBuilder($type), $defaults);
     }
 }

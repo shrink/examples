@@ -35,7 +35,7 @@ final class Examples
     {
         $type = $configuration->type();
 
-        if (! array_key_exists($type, $this->definitions)) {
+        if (!array_key_exists($type, $this->definitions)) {
             throw new InvalidArgumentException(
                 "{$type} is not registered, an example cannot be built."
             );
@@ -43,10 +43,9 @@ final class Examples
 
         $definition = $this->definitions[$configuration->type()];
 
-        $parameters = $this->fillParameters(array_merge(
-            $definition->defaults(),
-            $configuration->parameters()
-        ));
+        $parameters = $this->fillParameters(
+            array_merge($definition->defaults(), $configuration->parameters())
+        );
 
         return $definition->build($parameters);
     }

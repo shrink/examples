@@ -15,22 +15,23 @@ final class CallableBuilderTest extends TestCase
      */
     public function BuildsExampleWithParameters(): void
     {
-        $callableBuilder = new CallableBuilder(
-            function (string $a, string $x): StdClass {
-                return (object) [
-                    'a' => $a,
-                    'x' => $x,
-                ];
-            }
-        );
+        $callableBuilder = new CallableBuilder(function (
+            string $a,
+            string $x
+        ): StdClass {
+            return (object) [
+                "a" => $a,
+                "x" => $x,
+            ];
+        });
 
         $expectedObject = new StdClass();
-        $expectedObject->a = 'b';
-        $expectedObject->x = 'y';
+        $expectedObject->a = "b";
+        $expectedObject->x = "y";
 
         $object = $callableBuilder->build([
-            'a' => 'b',
-            'x' => 'y',
+            "a" => "b",
+            "x" => "y",
         ]);
 
         $this->assertEquals($expectedObject, $object);
@@ -41,13 +42,12 @@ final class CallableBuilderTest extends TestCase
      */
     public function BuildsExampleUsingInvokable(): void
     {
-        $invokable = new class
-        {
+        $invokable = new class {
             public function __invoke(string $a, string $x): object
             {
                 return (object) [
-                    'a' => $a,
-                    'x' => $x,
+                    "a" => $a,
+                    "x" => $x,
                 ];
             }
         };
@@ -55,12 +55,12 @@ final class CallableBuilderTest extends TestCase
         $callableBuilder = new CallableBuilder($invokable);
 
         $expectedObject = new StdClass();
-        $expectedObject->a = 'b';
-        $expectedObject->x = 'y';
+        $expectedObject->a = "b";
+        $expectedObject->x = "y";
 
         $object = $callableBuilder->build([
-            'a' => 'b',
-            'x' => 'y',
+            "a" => "b",
+            "x" => "y",
         ]);
 
         $this->assertEquals($expectedObject, $object);
@@ -71,7 +71,7 @@ final class CallableBuilderTest extends TestCase
      */
     public function BuildsExampleWithoutParameters(): void
     {
-        $callableBuilder = new CallableBuilder(fn (): StdClass => (object) []);
+        $callableBuilder = new CallableBuilder(fn(): StdClass => (object) []);
 
         $expectedObject = new StdClass();
 

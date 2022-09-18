@@ -3,4 +3,4 @@
 .phpunit.results.cache
 composer.lock
 package-lock.json
-*.junit.xml
+/test-reports/

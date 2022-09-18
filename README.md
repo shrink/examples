@@ -61,7 +61,8 @@ $examples = new Examples();
 ### Define Examples
 
 The `E::define()` method accepts a class `type` and zero or more named
-arguments containing the example's default values.
+arguments containing the example's default values. Register definitions with
+your Examples instance.
 
 ```php
 use Shrink\Examples\E;

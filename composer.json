@@ -4,7 +4,8 @@
   "description": "Compose example objects",
   "license": "MIT",
   "require": {
-    "php": "^8.1"
+    "php": "^8.1",
+    "dq5studios/psalm-junit": "^2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.3",
@@ -31,7 +32,7 @@
       "vendor/bin/phpcs --standard=PSR12 src/"
     ],
     "static": [
-      "vendor/bin/psalm --long-progress --report=psalm.junit.xml"
+      "vendor/bin/psalm --long-progress"
     ],
     "test": [
       "vendor/bin/phpunit --colors=always"

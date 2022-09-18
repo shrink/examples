@@ -1,4 +1,4 @@
-name: Validate Library
+name: Test Library
 
 on:
   push:
@@ -13,13 +13,17 @@ jobs:
         composer: ["1", "2"]
     steps:
       - uses: actions/checkout@v2
-      - name: Run Tests
-        run: |
-          PHP_VERSION=${{ matrix.php }} COMPOSER_VERSION=${{ matrix.composer }} \
-          docker-compose up --force-recreate --build --exit-code-from=examples
-      - name: Upload Test Artifacts
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "${{ matrix.php }}"
+          tools: "composer:v${{ matrix.composer }}"
+          coverage: pcov
+      - run: composer install --no-ansi --no-interaction
+      - name: Validate Code
+        run: composer check
+      - name: Upload Test Reports
         uses: actions/upload-artifact@v2
         with:
-          path: "*.junit.xml"
+          path: "/test-reports/*"
           name: test-reports-${{ matrix.php }}
           if-no-files-found: error

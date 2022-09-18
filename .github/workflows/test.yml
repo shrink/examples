@@ -25,5 +25,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           path: "test-reports/*"
-          name: test-reports-${{ matrix.php }}
+          name: test-reports-php${{ matrix.php }}-composer${{ matrix.composer }}
           if-no-files-found: error
